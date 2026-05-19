@@ -3,23 +3,22 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 
-import 'bbps_flutter_platform_interface.dart';
+import 'bbps_sdk_flutter_platform_interface.dart';
 
 /// An implementation of [BbpsFlutterPlatform] that uses method channels.
 class MethodChannelBbpsFlutter extends BbpsFlutterPlatform {
   /// The method channel used to interact with the native platform.
   @visibleForTesting
-  final methodChannel = const MethodChannel('bbps_flutter');
+  final methodChannel = const MethodChannel('bbps_sdk_flutter');
 
   /// The event channel for receiving BBPS events.
   @visibleForTesting
-  final eventChannel = const EventChannel('bbps_flutter_events');
+  final eventChannel = const EventChannel('bbps_sdk_flutter_events');
 
   Stream<BbpsEvent>? _eventStream;
 
   @override
   Future<bool> createService(String clientId) async {
-    print("PAWAN >>> createService in lib methodChannel");
     final result = await methodChannel.invokeMethod<bool>('createService', {
       'clientId': clientId,
     });

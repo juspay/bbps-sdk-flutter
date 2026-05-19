@@ -1,4 +1,4 @@
-package com.example.bbps_flutter
+package com.example.bbps_sdk_flutter
 
 import androidx.fragment.app.FragmentActivity
 import android.content.Intent
@@ -104,14 +104,13 @@ class BbpsFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware, Event
     }
 
     override fun onAttachedToEngine(flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
-        methodChannel = MethodChannel(flutterPluginBinding.binaryMessenger, "bbps_flutter")
+        methodChannel = MethodChannel(flutterPluginBinding.binaryMessenger, "bbps_sdk_flutter")
         methodChannel.setMethodCallHandler(this)
-        eventChannel = EventChannel(flutterPluginBinding.binaryMessenger, "bbps_flutter_events")
+        eventChannel = EventChannel(flutterPluginBinding.binaryMessenger, "bbps_sdk_flutter_events")
         eventChannel?.setStreamHandler(this)
     }
 
     override fun onMethodCall(call: MethodCall, result: Result) {
-        Log.i("PAWAN >>> in Native", call.method)
         when (call.method) {
             "createService" -> createService(call.argument<String>("clientId"), result)
             "initiate" -> initiate(call.argument<Map<String, Any>>("params"), result)
@@ -124,7 +123,6 @@ class BbpsFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware, Event
     }
 
     private fun createService(clientId: String?, result: Result) {
-        Log.i("PAWAN >>> In createService function", "clientId: $clientId")
         
         val fragmentActivity = binding?.activity as? FragmentActivity
         if (fragmentActivity !is FragmentActivity) {

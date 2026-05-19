@@ -1,6 +1,6 @@
-# bbps_flutter_example
+# bbps_sdk_flutter_example
 
-Demonstrates how to use the bbps_flutter plugin.
+Demonstrates how to use the bbps_sdk_flutter plugin.
 
 ## Getting Started
 

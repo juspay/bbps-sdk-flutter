@@ -1,4 +1,4 @@
-package com.example.bbps_flutter
+package com.example.bbps_sdk_flutter
 
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel

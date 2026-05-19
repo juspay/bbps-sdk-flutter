@@ -28,15 +28,14 @@ public class BbpsFlutterPlugin: NSObject, FlutterPlugin {
     }
 
     public static func register(with registrar: FlutterPluginRegistrar) {
-        let channel = FlutterMethodChannel(name: "bbps_flutter", binaryMessenger: registrar.messenger())
-        let eventChannel = FlutterEventChannel(name: "bbps_flutter_events", binaryMessenger: registrar.messenger())
+        let channel = FlutterMethodChannel(name: "bbps_sdk_flutter", binaryMessenger: registrar.messenger())
+        let eventChannel = FlutterEventChannel(name: "bbps_sdk_flutter_events", binaryMessenger: registrar.messenger())
         let instance = BbpsFlutterPlugin()
         registrar.addMethodCallDelegate(instance, channel: channel)
         eventChannel.setStreamHandler(instance)
     }
 
     public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
-        NSLog("PAWAN >>> iOS Received: %@ with args: %@", call.method, String(describing: call.arguments))
         switch call.method {
         case "createService":
             createService(call.arguments as? [String: Any], result: result)
@@ -63,7 +62,6 @@ public class BbpsFlutterPlugin: NSObject, FlutterPlugin {
         
         self.clientId = clientId
         bbpsService = BBPSService(clientId: clientId)
-        NSLog("PAWAN >>> iOS Service created with clientId: %@", clientId)
         result(true)
     }
 
@@ -96,8 +94,6 @@ public class BbpsFlutterPlugin: NSObject, FlutterPlugin {
                 payload[key] = value
             }
         }
-        
-        NSLog("PAWAN >>> iOS initiate payload: %@", payload)
         
         service.initiate(viewController, payload: payload) { [weak self] response in
             guard let self = self else { return }
@@ -137,14 +133,12 @@ public class BbpsFlutterPlugin: NSObject, FlutterPlugin {
     }
     
     private func terminate(result: @escaping FlutterResult) {
-        NSLog("PAWAN >>> iOS Terminating service")
         bbpsService?.terminate()
         bbpsService = nil
         result(true)
     }
 
     private func onBackPressed(result: @escaping FlutterResult) {
-        NSLog("PAWAN >>> iOS onBackPressed")
         result(false)
     }
 }

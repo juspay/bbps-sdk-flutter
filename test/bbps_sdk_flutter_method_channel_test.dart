@@ -1,12 +1,12 @@
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:bbps_flutter/bbps_flutter_method_channel.dart';
+import 'package:bbps_sdk_flutter/bbps_sdk_flutter_method_channel.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
   MethodChannelBbpsFlutter platform = MethodChannelBbpsFlutter();
-  const MethodChannel channel = MethodChannel('bbps_flutter');
+  const MethodChannel channel = MethodChannel('bbps_sdk_flutter');
 
   setUp(() {
     TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger

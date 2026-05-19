@@ -3,7 +3,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:uuid/uuid.dart';
-import 'package:bbps_flutter/bbps_flutter.dart';
+import 'package:bbps_sdk_flutter/bbps_sdk_flutter.dart';
 
 void main() {
   runApp(const MyApp());

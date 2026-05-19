@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
-import 'bbps_flutter_method_channel.dart';
+import 'bbps_sdk_flutter_method_channel.dart';
 
 /// BBPS Event callback type
 typedef BbpsEventCallback = void Function(BbpsEvent event);

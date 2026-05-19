@@ -1,14 +1,13 @@
 import 'dart:async';
 
-import 'bbps_flutter_platform_interface.dart';
+import 'bbps_sdk_flutter_platform_interface.dart';
 
-export 'bbps_flutter_platform_interface.dart' show BbpsEvent;
+export 'bbps_sdk_flutter_platform_interface.dart' show BbpsEvent;
 
 /// BBPS Flutter Plugin main class
 class BbpsFlutter {
   /// Create BBPS service with clientId
   static Future<bool> createService(String clientId) {
-    print("PAWAN >>> lib root createService");
     return BbpsFlutterPlatform.instance.createService(clientId);
   }
 

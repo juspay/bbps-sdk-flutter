@@ -26,7 +26,7 @@ Add the following to your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  bbps_flutter: ^x.y.z  # Replace with latest version
+  bbps_sdk_flutter: ^x.y.z  # Replace with latest version
 ```
 
 Then run:
@@ -190,7 +190,7 @@ The BBPS iOS SDK uses a pre-build script to download assets. Ensure your Xcode b
 ### Import the Package
 
 ```dart
-import 'package:bbps_flutter/bbps_flutter.dart';
+import 'package:bbps_sdk_flutter/bbps_sdk_flutter.dart';
 ```
 
 ### Initialize BBPS Service
@@ -375,7 +375,7 @@ void dispose() {
 
 ```dart
 import 'package:flutter/material.dart';
-import 'package:bbps_flutter/bbps_flutter.dart';
+import 'package:bbps_sdk_flutter/bbps_sdk_flutter.dart';
 
 class BbpsPaymentPage extends StatefulWidget {
   @override
@@ -575,8 +575,8 @@ kotlinOptions {
 
 The plugin uses the following method channels:
 
-- **Android:** `com.example.bbps_flutter`
-- **iOS:** `bbps_flutter`
+- **Android:** `com.example.bbps_sdk_flutter`
+- **iOS:** `bbps_sdk_flutter`
 
 ## Additional Information
 

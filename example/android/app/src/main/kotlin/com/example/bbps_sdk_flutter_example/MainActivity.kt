@@ -1,4 +1,4 @@
-package com.example.bbps_flutter_example
+package com.example.bbps_sdk_flutter_example
 
 import io.flutter.embedding.android.FlutterFragmentActivity
 

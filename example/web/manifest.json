@@ -1,6 +1,6 @@
 {
-    "name": "bbps_flutter_example",
-    "short_name": "bbps_flutter_example",
+    "name": "bbps_sdk_flutter_example",
+    "short_name": "bbps_sdk_flutter_example",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
