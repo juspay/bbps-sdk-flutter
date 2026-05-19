@@ -1,0 +1,56 @@
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+        maven { url "https://maven.juspay.in/hyper-sdk" }
+    }
+    dependencies {
+        classpath "in.juspay:bbps.plugin:0.0.2"
+    }
+}
+
+apply plugin: "com.android.library"
+apply plugin: "kotlin-android"
+// Note: bbps.plugin is intentionally NOT applied here.
+// Merchants must apply bbps.plugin in their app-level build.gradle
+// along with their own bbps { clientId = "..."; sdkVersion = "..." } configuration.
+// The bbps SDK dependency is added explicitly below for compilation.
+
+group = "com.example.bbps_flutter"
+version = "1.0-SNAPSHOT"
+
+repositories {
+    google()
+    mavenCentral()
+    maven { url "https://airborne.juspay.in/builds/hyper-sdk/" }
+    maven { url "https://maven.juspay.in/hyper-sdk" }
+}
+
+android {
+    namespace = "com.example.bbps_flutter"
+
+    compileSdk = 36
+
+    defaultConfig {
+        minSdk = 24
+    }
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
+
+    kotlinOptions {
+        jvmTarget = "17"
+    }
+}
+
+dependencies {
+    // Explicitly add the BBPS SDK dependency for compilation.
+    // The bbps.plugin (applied in the merchant's app build.gradle) normally
+    // injects this dependency, but we need it here for the plugin module to compile.
+    implementation "in.juspay:bbps:0.1.9"
+
+    testImplementation "org.jetbrains.kotlin:kotlin-test"
+    testImplementation "org.mockito:mockito-core:5.0.0"
+}
