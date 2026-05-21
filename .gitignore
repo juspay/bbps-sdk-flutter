@@ -31,3 +31,7 @@ migrate_working_dir/
 .flutter-plugins-dependencies
 /build/
 /coverage/
+
+# SPM generated files
+**/Package.resolved
+ios/bbps_sdk_flutter/.build/

@@ -1,59 +1,16 @@
 PODS:
-  - Airborne (0.30.1)
-  - bbps_sdk_flutter (0.0.1):
-    - BBPSSDK
-    - Flutter
-  - BBPSSDK (0.0.2):
-    - HyperSDK (= 2.2.7)
   - Flutter (1.0.0)
-  - HyperCore (1.0.0)
-  - HyperSDK (2.2.7):
-    - Airborne (= 0.30.1)
-    - HyperCore (= 1.0.0)
-    - JuspaySafeBrowser (= 0.1.94)
-  - integration_test (0.0.1):
-    - Flutter
-  - JuspaySafeBrowser (0.1.94)
 
 DEPENDENCIES:
-  - bbps_sdk_flutter (from `.symlinks/plugins/bbps_sdk_flutter/ios`)
-  - BBPSSDK (from `https://github.com/juspay/bbps-ios.git`, branch `bbps-ios_integration_changes`)
   - Flutter (from `Flutter`)
-  - integration_test (from `.symlinks/plugins/integration_test/ios`)
-
-SPEC REPOS:
-  trunk:
-    - Airborne
-    - HyperCore
-    - HyperSDK
-    - JuspaySafeBrowser
 
 EXTERNAL SOURCES:
-  bbps_sdk_flutter:
-    :path: ".symlinks/plugins/bbps_sdk_flutter/ios"
-  BBPSSDK:
-    :branch: bbps-ios_integration_changes
-    :git: https://github.com/juspay/bbps-ios.git
   Flutter:
     :path: Flutter
-  integration_test:
-    :path: ".symlinks/plugins/integration_test/ios"
-
-CHECKOUT OPTIONS:
-  BBPSSDK:
-    :commit: bb5709bfd9f20cb69b523f23ecfc13cab893573c
-    :git: https://github.com/juspay/bbps-ios.git
 
 SPEC CHECKSUMS:
-  Airborne: 75d28fa4564da09a6873958c5e9bb5cc087bd7a8
-  bbps_sdk_flutter: e99d58cbeaaa3337b9de60eb72410652b7171ef4
-  BBPSSDK: a324f9f761c8fd0d5256430fe061d7781209e590
   Flutter: cabc95a1d2626b1b06e7179b784ebcf0c0cde467
-  HyperCore: ecb6079d68718fbb45307d48d0282f82d9799c59
-  HyperSDK: 3f349da298264f44294201be8ab21e94cb424e7e
-  integration_test: 4a889634ef21a45d28d50d622cf412dc6d9f586e
-  JuspaySafeBrowser: 8141eb92fe4d77da997907a0c5eadc0616bce2fa
 
-PODFILE CHECKSUM: c1418c270d4857641391e7c4e5c586bd6c71a5ec
+PODFILE CHECKSUM: 3c63482e143d1b91d2d2560aee9fb04ecc74ac7e
 
 COCOAPODS: 1.16.2
