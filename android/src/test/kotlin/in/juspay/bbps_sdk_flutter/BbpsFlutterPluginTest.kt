@@ -1,4 +1,4 @@
-package com.example.bbps_sdk_flutter
+package `in`.juspay.bbps_sdk_flutter
 
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel

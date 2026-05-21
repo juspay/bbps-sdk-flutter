@@ -16,7 +16,7 @@ apply plugin: "kotlin-android"
 // along with their own bbps { clientId = "..."; sdkVersion = "..." } configuration.
 // The bbps SDK dependency is added explicitly below for compilation.
 
-group = "com.example.bbps_sdk_flutter"
+group = "in.juspay.bbps_sdk_flutter"
 
 repositories {
     google()
@@ -26,7 +26,7 @@ repositories {
 }
 
 android {
-    namespace = "com.example.bbps_sdk_flutter"
+    namespace = "in.juspay.bbps_sdk_flutter"
 
     compileSdk = 36
 

@@ -1,5 +1,5 @@
 name: bbps_sdk_flutter
-description: "A new Flutter plugin project."
+description: "Flutter plugin for Juspay BBPS (Bharat BillPay System) bill payments"
 version: 0.0.1
 homepage:
 
@@ -35,7 +35,7 @@ flutter:
   plugin:
     platforms:
       android:
-        package: com.example.bbps_sdk_flutter
+        package: in.juspay.bbps_sdk_flutter
         pluginClass: BbpsFlutterPlugin
       ios:
         pluginClass: BbpsFlutterPlugin

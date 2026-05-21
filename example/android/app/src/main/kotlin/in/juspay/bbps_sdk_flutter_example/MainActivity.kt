@@ -1,4 +1,4 @@
-package com.example.bbps_sdk_flutter_example
+package `in`.juspay.bbps_sdk_flutter_example
 
 import io.flutter.embedding.android.FlutterFragmentActivity
 
