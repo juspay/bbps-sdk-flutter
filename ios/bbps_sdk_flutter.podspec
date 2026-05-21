@@ -15,6 +15,7 @@ Flutter plugin for Juspay BBPS SDK.
   s.source           = { :path => '.' }
   s.source_files = 'bbps_sdk_flutter/Sources/bbps_sdk_flutter/**/*.swift'
   s.resource_bundles = {'bbps_sdk_flutter_privacy' => ['bbps_sdk_flutter/Sources/bbps_sdk_flutter/PrivacyInfo.xcprivacy']}
+  s.dependency 'Flutter'
   s.dependency 'BBPSSDK', '>= 0.0.5'
   s.platform = :ios, '13.0'
   s.swift_version = '5.0'

@@ -1,7 +1,8 @@
 name: bbps_sdk_flutter
 description: "Flutter plugin for Juspay BBPS (Bharat BillPay System) bill payments"
 version: 0.0.1
-homepage:
+repository: https://github.com/juspay/bbps-sdk-flutter
+homepage: https://juspay.in/
 
 environment:
   sdk: ^3.11.5

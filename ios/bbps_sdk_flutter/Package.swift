@@ -4,7 +4,7 @@ import PackageDescription
 let package = Package(
     name: "bbps_sdk_flutter",
     platforms: [
-        .iOS("13.0")
+        .iOS(.v13)
     ],
     products: [
         .library(name: "bbps-sdk-flutter", targets: ["bbps_sdk_flutter"])
