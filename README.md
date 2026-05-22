@@ -200,7 +200,9 @@ Before using any BBPS functionality, you must create the service:
 ```dart
 Future<void> initializeBbps() async {
   try {
-    final success = await BbpsFlutter.createService('YOUR_CLIENT_ID');
+    final success = await BbpsFlutter.createService(
+      params: {'clientId': 'YOUR_CLIENT_ID'},
+    );
     if (success) {
       print('BBPS Service created successfully');
     }
@@ -218,12 +220,14 @@ Start a BBPS session with merchant credentials:
 Future<void> startBbpsSession() async {
   try {
     await BbpsFlutter.initiate(
-      agentId: 'YOUR_AGENT_ID',          // Your BBPS agent ID
-      mobile: 'USER_MOBILE_NUMBER',       // Customer mobile number
-      deviceId: 'UNIQUE_DEVICE_ID',       // Unique device identifier
-      clientId: 'YOUR_CLIENT_ID',         // Your BBPS client ID
-      action: 'initiate',                 // Action type
-      authToken: 'YOUR_AUTH_TOKEN',       // Optional: Authentication token
+      params: {
+        'action': 'initiate',
+        'agentId': 'YOUR_AGENT_ID',          // Your BBPS agent ID
+        'mobile': 'USER_MOBILE_NUMBER',       // Customer mobile number
+        'deviceId': 'UNIQUE_DEVICE_ID',       // Unique device identifier
+        'clientId': 'YOUR_CLIENT_ID',         // Your BBPS client ID
+        'authToken': 'YOUR_AUTH_TOKEN',       // Optional: Authentication token
+      },
     );
     print('BBPS Session initiated successfully');
   } catch (e) {
@@ -232,12 +236,12 @@ Future<void> startBbpsSession() async {
 }
 ```
 
-**Parameters:**
+**Parameters (passed via `params` map):**
+- `action` (required): Action type, typically `'initiate'`
 - `agentId` (required): Your BBPS agent identifier
 - `mobile` (required): Customer's mobile number
 - `deviceId` (required): Unique device identifier for the session
 - `clientId` (required): Your BBPS merchant client ID
-- `action` (required): Action type, typically `'initiate'`
 - `authToken` (optional): JWT or OAuth token for authenticated sessions
 
 ### Process Actions
@@ -248,7 +252,6 @@ Execute BBPS actions after successful initialization:
 Future<void> processPayment() async {
   try {
     final result = await BbpsFlutter.process(
-      'BBPS_PAYMENT',
       params: {
         'action': 'BBPS_PAYMENT',
         'agentId': 'YOUR_AGENT_ID',
@@ -403,14 +406,16 @@ class _BbpsPaymentPageState extends State<BbpsPaymentPage> {
 
   Future<void> _initialize() async {
     try {
-      await BbpsFlutter.createService('YOUR_CLIENT_ID');
+      await BbpsFlutter.createService(params: {'clientId': 'YOUR_CLIENT_ID'});
       await BbpsFlutter.initiate(
-        agentId: 'YOUR_AGENT_ID',
-        mobile: '9876543210',
-        deviceId: 'device_${DateTime.now().millisecondsSinceEpoch}',
-        clientId: 'YOUR_CLIENT_ID',
-        action: 'initiate',
-        authToken: 'YOUR_AUTH_TOKEN',
+        params: {
+          'action': 'initiate',
+          'agentId': 'YOUR_AGENT_ID',
+          'mobile': '9876543210',
+          'deviceId': 'device_${DateTime.now().millisecondsSinceEpoch}',
+          'clientId': 'YOUR_CLIENT_ID',
+          'authToken': 'YOUR_AUTH_TOKEN',
+        },
       );
       setState(() => _isInitialized = true);
     } catch (e) {
@@ -423,7 +428,6 @@ class _BbpsPaymentPageState extends State<BbpsPaymentPage> {
     
     try {
       final result = await BbpsFlutter.process(
-        'BBPS_PAYMENT',
         params: {
           'action': 'BBPS_PAYMENT',
           'agentId': 'YOUR_AGENT_ID',

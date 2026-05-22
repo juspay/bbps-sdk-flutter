@@ -48,21 +48,14 @@ abstract class BbpsFlutterPlatform extends PlatformInterface {
     _instance = instance;
   }
 
-  /// Create BBPS service with clientId
-  Future<bool> createService(String clientId);
+  /// Create BBPS service
+  Future<bool> createService({Map<String, dynamic>? params});
 
   /// Initiate BBPS session
-  Future<void> initiate({
-    required String action,
-    required String agentId,
-    required String mobile,
-    required String deviceId,
-    required String clientId,
-    String? authToken,
-  });
+  Future<void> initiate({Map<String, dynamic>? params});
 
   /// Process BBPS action
-  Future<dynamic> process(String action, {Map<String, dynamic>? params});
+  Future<dynamic> process({Map<String, dynamic>? params});
 
   /// Terminate BBPS service
   Future<bool> terminate();

@@ -26,6 +26,9 @@ void main() {
   });
 
   test('createService', () async {
-    expect(await platform.createService('test-client'), true);
+    expect(
+      await platform.createService(params: {'clientId': 'test-client'}),
+      true,
+    );
   });
 }

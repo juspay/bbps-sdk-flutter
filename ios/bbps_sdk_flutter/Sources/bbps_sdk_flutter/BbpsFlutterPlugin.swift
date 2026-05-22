@@ -54,8 +54,8 @@ public class BbpsFlutterPlugin: NSObject, FlutterPlugin {
         }
     }
 
-    private func createService(_ args: [String: Any]?, result: @escaping FlutterResult) {
-        guard let clientId = args?["clientId"] as? String else {
+    private func createService(_ params: [String: Any]?, result: @escaping FlutterResult) {
+        guard let clientId = params?["clientId"] as? String else {
             result(FlutterError(code: "INIT_ERROR", message: "clientId is required", details: nil))
             return
         }
@@ -65,12 +65,12 @@ public class BbpsFlutterPlugin: NSObject, FlutterPlugin {
         result(true)
     }
 
-    private func initiate(_ args: [String: Any]?, result: @escaping FlutterResult) {
+    private func initiate(_ params: [String: Any]?, result: @escaping FlutterResult) {
         guard let service = bbpsService else {
             result(FlutterError(code: "NOT_INITIALIZED", message: "Call createService first", details: nil))
             return
         }
-        guard let params = args?["params"] as? [String: Any] else {
+        guard let params = params else {
             result(FlutterError(code: "INVALID_PARAMS", message: "Params required", details: nil))
             return
         }
@@ -81,18 +81,9 @@ public class BbpsFlutterPlugin: NSObject, FlutterPlugin {
         
         currentResult = result
         
-        var payload: [String: Any] = [
-            "action": "initiate",
-            "clientId": clientId ?? "",
-            "agentId": params["agentId"] ?? "",
-            "mobile": params["mobile"] ?? "",
-            "deviceId": params["deviceId"] ?? ""
-        ]
-        
+        var payload: [String: Any] = [:]
         for (key, value) in params {
-            if payload[key] == nil {
-                payload[key] = value
-            }
+            payload[key] = value
         }
         
         service.initiate(viewController, payload: payload) { [weak self] response in
@@ -115,21 +106,14 @@ public class BbpsFlutterPlugin: NSObject, FlutterPlugin {
         }
     }
     
-    private func process(_ args: [String: Any]?, result: @escaping FlutterResult) {
+    private func process(_ params: [String: Any]?, result: @escaping FlutterResult) {
         guard let service = bbpsService else {
             result(FlutterError(code: "NOT_INITIALIZED", message: "Call createService first", details: nil))
             return
         }
-        guard let action = args?["action"] as? String else {
-            result(FlutterError(code: "INVALID_PARAMS", message: "Action required", details: nil))
-            return
-        }
-        
-        var params = args?["params"] as? [String: Any] ?? [:]
-        params["action"] = action
         
         currentResult = result
-        service.process(params)
+        service.process(params ?? [:])
     }
     
     private func terminate(result: @escaping FlutterResult) {
