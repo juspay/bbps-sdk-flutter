@@ -32,7 +32,7 @@ class BbpsFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware, Event
 
     inner class BBPSAgent(private val context: FragmentActivity) : BBPSAgentInterface {
         
-        fun do_payment(billDetails: JSONObject?) {
+        override fun do_payment(billDetails: JSONObject?) {
             Log.d(TAG, "do_payment: $billDetails")
             eventSink?.success(mapOf(
                 "event" to "DO_PAYMENT",
@@ -112,9 +112,9 @@ class BbpsFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware, Event
 
     override fun onMethodCall(call: MethodCall, result: Result) {
         when (call.method) {
-            "createService" -> createService(call.argument<String>("clientId"), result)
-            "initiate" -> initiate(call.argument<Map<String, Any>>("params"), result)
-            "process" -> process(call.argument<String>("action"), call.argument<Map<String, Any>>("params"), result)
+            "createService" -> createService(call.arguments as? Map<String, Any>, result)
+            "initiate" -> initiate(call.arguments as? Map<String, Any>, result)
+            "process" -> process(call.arguments as? Map<String, Any>, result)
             "terminate" -> terminate(result)
             "onBackPressed" -> result.success(bbpsService?.onBackPressed() ?: false)
             "getPlatformVersion" -> result.success("Android ${android.os.Build.VERSION.RELEASE}")
@@ -122,7 +122,7 @@ class BbpsFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware, Event
         }
     }
 
-    private fun createService(clientId: String?, result: Result) {
+    private fun createService(params: Map<String, Any>?, result: Result) {
         
         val fragmentActivity = binding?.activity as? FragmentActivity
         if (fragmentActivity !is FragmentActivity) {
@@ -131,6 +131,7 @@ class BbpsFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware, Event
             return
         }
         
+        val clientId = params?.get("clientId") as? String
         if (clientId.isNullOrEmpty()) {
             result.error("INIT_ERROR", "clientId cannot be null or empty", null)
             return
@@ -163,12 +164,7 @@ class BbpsFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware, Event
         currentResult = result
         try {
             val payload = JSONObject()
-            payload.put("action", "initiate")
-            payload.put("clientId", clientId)
-            payload.put("agentId", params?.get("agentId") ?: "")
-            payload.put("mobile", params?.get("mobile") ?: "")
-            payload.put("deviceId", params?.get("deviceId") ?: "")
-            params?.forEach { (key, value) -> if (!payload.has(key)) payload.put(key, value) }
+            params?.forEach { (key, value) -> payload.put(key, value) }
             bbpsService?.initiate(fragmentActivity, payload)
         } catch (e: Exception) {
             Log.e(TAG, "Error initiating BBPS", e)
@@ -177,7 +173,7 @@ class BbpsFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware, Event
         }
     }
 
-    private fun process(action: String?, params: Map<String, Any>?, result: Result) {
+    private fun process(params: Map<String, Any>?, result: Result) {
         if (bbpsService == null) {
             result.error("NOT_INITIALIZED", "BBPS Service not initialized. Call createService first.", null)
             return
@@ -192,7 +188,6 @@ class BbpsFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware, Event
         currentResult = result
         try {
             val payload = JSONObject()
-            payload.put("action", action)
             params?.forEach { (key, value) -> payload.put(key, value) }
             bbpsService?.process(fragmentActivity, payload)
         } catch (e: Exception) {

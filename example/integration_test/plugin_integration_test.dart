@@ -15,7 +15,9 @@ void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
   testWidgets('createService test', (WidgetTester tester) async {
-    final bool result = await BbpsFlutter.createService('test-client');
+    final bool result = await BbpsFlutter.createService(
+      params: {'clientId': 'test-client'},
+    );
     expect(result, true);
   });
 }

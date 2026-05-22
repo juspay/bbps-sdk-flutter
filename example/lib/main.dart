@@ -33,10 +33,10 @@ class _MyAppState extends State<MyApp> {
   ];
 
   // Demo values
-  final String _agentId = 'JP01JP21INB519364396';
+  final String _agentId = 'YB71YB72MOB511066132';
   final String _mobile = '9889993924';
   final String _sampleToken =
-      'eyJhbGciOiJSUzI1NiIsImtpZCI6IkpQMDFKUDIxSU5CNTE5MzY0Mzk2IiwidHlwIjoiSldUIn0.eyJtb2JpbGUiOiI5MTEwMjAzMDQwIiwiZGV2aWNlX2lkIjoiZGV2aWNlMDAxIiwiaWF0IjoxNzM1NTYzNDcxfQ.Z6N9R-KFHPIj0bHJFfuTJAidETswTz3RC3MfHcuAPwosbUYreI9Fl577BXVywteVQD1eVZ1YQ67D89Pp57G5b4HhBDT8xx-P4QYY_DQ-rByc99ZfmO8QWQH0Y51sdqNKRkxYgo6BJhAl_C4dJwqKZuNPyCJzAhLVzYfcmqNmECTt9yoBiQe_ELnqBEyRbXlvpnL77A7Vw7RhH8J6KLYAlyrGGak2_tZ3WXZ9XzWPcum9OnFIm2rD2G1IhK7MfYBdkIbzxeNqVF6tyx8lov32csjjXswPhgZDIYoCqwdr3vH8GahRMdCf8cJ-2SZkvGytTfTn-rmNw5jw1XX_L-tQOg';
+      'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IllCNzFZQjcyTU9CNTExMDY2MTMyIn0.eyJtb2JpbGUiOiI5MDEwMjAzMDQwIiwiZGV2aWNlX2lkIjoiZGV2aWNlMDAxIiwiaWF0IjoxNzc5Mjc0OTIwfQ.G9grwYRWPAQTuWVxykrwNl23iCebv55HMbEo7pg7jcVV69NhVZiMXWsPmIFG2wlYYWZJBbQ5yPH40lqSRaOfkENbugcku7eGel2WNulDvCKiZmnqmtKNloj11LE4Ka-IbFghAEid1ONLDgYixtzR7kN8nzQSrmltQOnK1z3nUN6-a7OacFJ0bH2Wnz0cmZ_iTQk4flnCHbQuOVF-5XG6OzvRdRgGE1_-C7lsCMGmyRgBaDUjM1c8qQptn3bLLgs9h-MlBFp4Std-6NW77nNz6aaYAE_s0ovJ0N2dunsLDcr11XHaxS2Lng5ysQSzeVYihby3r_vLkhFR0rgpEK3FDw';
   final Uuid _uuid = Uuid();
 
   @override
@@ -62,7 +62,7 @@ class _MyAppState extends State<MyApp> {
 
   Future<void> _createService() async {
     try {
-      await BbpsFlutter.createService('fibe');
+      await BbpsFlutter.createService(params: {'clientId': 'stock'});
       _showSnackBar('Service Created Successfully');
     } catch (e) {
       _showSnackBar('Error creating service: $e');
@@ -72,11 +72,14 @@ class _MyAppState extends State<MyApp> {
   Future<void> _initiate() async {
     try {
       await BbpsFlutter.initiate(
-        agentId: _agentId,
-        mobile: _mobile,
-        deviceId: '356152103690000',
-        clientId: 'fibe',
-        action: 'initiate',
+        params: {
+          'action': 'initiate',
+          'agentId': _agentId,
+          'mobile': _mobile,
+          'deviceId': '356152103690000',
+          'clientId': 'stock',
+          'issuingCou': 'yes_biz',
+        },
       );
       setState(() {
         _isInitialized = true;
@@ -149,10 +152,7 @@ class _MyAppState extends State<MyApp> {
     try {
       final payload = _buildPayload(_selectedAction);
       debugPrint('PAWAN >>> Process payload: ${jsonEncode(payload)}');
-      final result = await BbpsFlutter.process(
-        _selectedAction,
-        params: payload,
-      );
+      final result = await BbpsFlutter.process(params: payload);
       _showSnackBar('Process result: $result');
     } catch (e) {
       _showSnackBar('Error processing: $e');

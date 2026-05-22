@@ -8,21 +8,14 @@ class MockBbpsFlutterPlatform
     with MockPlatformInterfaceMixin
     implements BbpsFlutterPlatform {
   @override
-  Future<bool> createService(String clientId) => Future.value(true);
+  Future<bool> createService({Map<String, dynamic>? params}) =>
+      Future.value(true);
 
   @override
-  Future<void> initiate({
-    required String agentId,
-    required String mobile,
-    required String deviceId,
-    required String clientId,
-    required String action,
-    String? authToken,
-  }) => Future.value();
+  Future<void> initiate({Map<String, dynamic>? params}) => Future.value();
 
   @override
-  Future<dynamic> process(String action, {Map<String, dynamic>? params}) =>
-      Future.value();
+  Future<dynamic> process({Map<String, dynamic>? params}) => Future.value();
 
   @override
   Future<bool> terminate() => Future.value(true);

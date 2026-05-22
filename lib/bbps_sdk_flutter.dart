@@ -6,36 +6,19 @@ export 'bbps_sdk_flutter_platform_interface.dart' show BbpsEvent;
 
 /// BBPS Flutter Plugin main class
 class BbpsFlutter {
-  /// Create BBPS service with clientId
-  static Future<bool> createService(String clientId) {
-    return BbpsFlutterPlatform.instance.createService(clientId);
+  /// Create BBPS service
+  static Future<bool> createService({Map<String, dynamic>? params}) {
+    return BbpsFlutterPlatform.instance.createService(params: params);
   }
 
   /// Initiate BBPS session
-  static Future<void> initiate({
-    required String agentId,
-    required String mobile,
-    required String deviceId,
-    required String clientId,
-    required String action,
-    String? authToken,
-  }) {
-    return BbpsFlutterPlatform.instance.initiate(
-      agentId: agentId,
-      mobile: mobile,
-      deviceId: deviceId,
-      clientId: clientId,
-      authToken: authToken,
-      action: action,
-    );
+  static Future<void> initiate({Map<String, dynamic>? params}) {
+    return BbpsFlutterPlatform.instance.initiate(params: params);
   }
 
   /// Process BBPS action
-  static Future<dynamic> process(
-    String action, {
-    Map<String, dynamic>? params,
-  }) {
-    return BbpsFlutterPlatform.instance.process(action, params: params);
+  static Future<dynamic> process({Map<String, dynamic>? params}) {
+    return BbpsFlutterPlatform.instance.process(params: params);
   }
 
   /// Terminate BBPS service

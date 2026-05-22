@@ -18,39 +18,25 @@ class MethodChannelBbpsFlutter extends BbpsFlutterPlatform {
   Stream<BbpsEvent>? _eventStream;
 
   @override
-  Future<bool> createService(String clientId) async {
-    final result = await methodChannel.invokeMethod<bool>('createService', {
-      'clientId': clientId,
-    });
+  Future<bool> createService({Map<String, dynamic>? params}) async {
+    final result = await methodChannel.invokeMethod<bool>(
+      'createService',
+      params ?? {},
+    );
     return result ?? false;
   }
 
   @override
-  Future<void> initiate({
-    required String agentId,
-    required String mobile,
-    required String deviceId,
-    required String clientId,
-    required String action,
-    String? authToken,
-  }) async {
-    final params = <String, dynamic>{
-      'agentId': agentId,
-      'mobile': mobile,
-      'deviceId': deviceId,
-      'clientId': clientId,
-      'action': action,
-      if (authToken != null) 'authToken': authToken,
-    };
-    await methodChannel.invokeMethod('initiate', {'params': params});
+  Future<void> initiate({Map<String, dynamic>? params}) async {
+    await methodChannel.invokeMethod('initiate', params ?? {});
   }
 
   @override
-  Future<dynamic> process(String action, {Map<String, dynamic>? params}) async {
-    final result = await methodChannel.invokeMethod<dynamic>('process', {
-      'action': action,
-      'params': params ?? {},
-    });
+  Future<dynamic> process({Map<String, dynamic>? params}) async {
+    final result = await methodChannel.invokeMethod<dynamic>(
+      'process',
+      params ?? {},
+    );
 
     // Try to parse result as JSON if it's a string
     if (result is String) {
