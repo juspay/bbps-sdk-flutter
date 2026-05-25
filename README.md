@@ -127,7 +127,7 @@ android {
 // Configure BBPS plugin with your merchant details
 bbps {
     clientId = "YOUR_CLIENT_ID"  // Replace with your client ID
-    sdkVersion = "0.1.9"          // BBPS SDK version
+    sdkVersion = "0.1.10"          // BBPS SDK version
 }
 
 flutter {
@@ -227,6 +227,7 @@ Future<void> startBbpsSession() async {
         'deviceId': 'UNIQUE_DEVICE_ID',       // Unique device identifier
         'clientId': 'YOUR_CLIENT_ID',         // Your BBPS client ID
         'authToken': 'YOUR_AUTH_TOKEN',       // Optional: Authentication token
+        'issuingCou': 'yes_biz'
       },
     );
     print('BBPS Session initiated successfully');
@@ -330,6 +331,7 @@ void handleAuthRefresh(Map<String, dynamic>? payload) {
 | `initiate_result` | Session initiation result |
 | `process_result` | Action processing result |
 | `refresh_auth` | Authentication token refresh required |
+| `DO_PAYMENT` | Handle Payment when this event is triggered |
 
 ### Handle Back Navigation
 
@@ -488,8 +490,7 @@ class _BbpsPaymentPageState extends State<BbpsPaymentPage> {
 ```gradle
 bbps {
     clientId = "YOUR_CLIENT_ID"     // Your BBPS merchant client ID
-    sdkVersion = "0.1.9"             // BBPS SDK version to use
-    development = false               // Set to true for development mode (optional)
+    sdkVersion = "0.1.10"             // BBPS SDK version to use
 }
 ```
 
@@ -524,7 +525,7 @@ pluginManagement {
 ```gradle
 bbps {
     clientId = "YOUR_CLIENT_ID"
-    sdkVersion = "0.1.9"
+    sdkVersion = "0.1.10"
 }
 ```
 
@@ -582,12 +583,6 @@ The plugin uses the following method channels:
 - **Android:** `com.example.bbps_sdk_flutter`
 - **iOS:** `bbps_sdk_flutter`
 
-## Additional Information
-
-For more details about the underlying native SDKs:
-
-- [BBPS Android Documentation](https://developer.bbpsonline.com)
-- [BBPS iOS Documentation](https://github.com/juspay/bbps-ios)
 
 For help getting started with Flutter development:
 - [Flutter Documentation](https://docs.flutter.dev)
