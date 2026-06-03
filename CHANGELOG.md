@@ -1,3 +1,9 @@
+## 0.0.3
+
+- Lowered minimum Dart SDK requirement from `^3.11.5` to `^3.9.0`
+- Raised minimum Flutter SDK requirement from `>=3.3.0` to `>=3.35.0` to align with Dart 3.9.0
+- Lowered `flutter_lints` from `^6.0.0` to `^5.0.0` for wider compatibility
+
 ## 0.0.2
 
 ### Breaking Changes

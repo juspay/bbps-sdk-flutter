@@ -14,7 +14,7 @@ A Flutter plugin for integrating BBPS (Bharat BillPay System) bill payment capab
 ## Requirements
 
 - Flutter SDK: >=3.3.0
-- Dart SDK: >=3.11.5
+- Dart SDK: >=3.9.0
 - Android: minSdkVersion 24 (Android 7.0)
 - iOS: iOS 13.0 or higher
 
