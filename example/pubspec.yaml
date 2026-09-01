@@ -4,6 +4,11 @@ description: "Demonstrates how to use the bbps_sdk_flutter plugin."
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
+# Overriding the iOS HyperSDK version pulled in by hypersdkflutter.
+# BBPSSDK pins HyperSDK to exactly 2.2.8, and hypersdkflutter 4.0.57 defaults to
+# 2.2.4, so this override lifts it to 2.2.8 and lets both pods resolve together.
+hyper_sdk_ios_version: "2.2.8"
+
 environment:
   sdk: ^3.9.0
 
@@ -28,7 +33,14 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
+
+  # Pinned to 4.0.57: 4.0.58 hard-pins HyperSDK 2.2.8.3, which clashes with the
+  # 2.2.8 that BBPSSDK requires, and hyper_sdk_ios_version can only pin upwards.
+  hypersdkflutter: 4.0.57
   uuid: ^4.5.1
+  # RSA SHA-256 signing for the HyperUPI signature auth variant, ported from
+  # hyper-sdk-android's Utils.newSign / getSignedData.
+  basic_utils: ^5.8.2
 
 dev_dependencies:
   integration_test:
@@ -48,6 +60,15 @@ dev_dependencies:
 
 # The following section is specific to Flutter packages.
 flutter:
+
+  # bbps_sdk_flutter ships a Package.swift, so Flutter would resolve it (and
+  # transitively BBPSSDK -> HyperSDK/Airborne/HyperCore/JuspaySafeBrowser) via
+  # Swift Package Manager. hypersdkflutter has no SPM support and can only come
+  # in via CocoaPods, which pulls that same framework chain a second time, and
+  # the iOS build then fails with "Multiple commands produce ...framework".
+  # Forcing everything through CocoaPods keeps a single copy of each framework.
+  config:
+    enable-swift-package-manager: false
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in

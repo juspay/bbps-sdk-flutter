@@ -31,7 +31,18 @@ target 'Runner' do
   use_frameworks!
 
   # Required: BBPSSDK is an internal Juspay dependency
-  pod 'BBPSSDK', :git => 'https://github.com/juspay/bbps-ios.git', :tag => 'v0.0.5'
+  pod 'BBPSSDK', :git => 'https://github.com/juspay/bbps-ios.git', :tag => 'v0.0.8'
+
+  # HyperUPI micro-SDK (In-App UPI). hypersdkflutter only pulls in the HyperSDK
+  # core pod, so the UPI/QR micro-SDKs have to be declared explicitly and kept
+  # on the same version as HyperSDK (2.2.8, set via hyper_sdk_ios_version).
+  pod 'HyperUPI', '2.2.8'
+  pod 'HyperQR', '2.2.8'
+
+  # NPCI Common Library. HyperUPI links against CommonLibrary.framework without
+  # declaring it as a pod dependency, so it has to be added by hand or the app
+  # crashes at launch with a dyld "Library not loaded" error. See the podspec.
+  pod 'CommonLibrary', :podspec => 'CommonLibrary.podspec'
 
   flutter_install_all_ios_pods File.dirname(File.realpath(__FILE__))
   target 'RunnerTests' do
@@ -40,6 +51,26 @@ target 'Runner' do
 end
 
 post_install do |installer|
+  # Both SDKs ship without their assets and fuse them into
+  # HyperSDK.xcframework at pod install time. HyperSDK's own
+  # "Validate Mandatory Files" build phase fails the build if this is skipped,
+  # so it has to run on every pod install.
+  #
+  # ORDER MATTERS. Each fuse run starts by wiping every previously fused
+  # asset, so running them the other way round (or letting both clean) leaves
+  # only the last one's assets and the other SDK's icons silently go missing.
+  #
+  #   1. BBPSSDK's wrapper hardcodes clean_assets=true, so it runs first and
+  #      does the wipe. It reads its clientId from BBPSConfig.json and fuses
+  #      the `bbps` tenant into a bbps-<clientId>.bundle subdirectory.
+  #   2. HyperSDK then runs with clean_assets=false so it ADDS the `juspay`
+  #      tenant (clientId from MerchantConfig.txt) at the framework root
+  #      instead of replacing what BBPS just fused.
+  system("ruby", "Pods/BBPSSDK/Sources/BBPSSDK/Fuse.rb") ||
+    raise("[BBPSSDK] Fuse.rb failed")
+  system("ruby", "Pods/HyperSDK/Fuse.rb", "false") ||
+    raise("[HyperSDK] Fuse.rb failed")
+
   installer.pods_project.targets.each do |target|
     flutter_additional_ios_build_settings(target)
   end

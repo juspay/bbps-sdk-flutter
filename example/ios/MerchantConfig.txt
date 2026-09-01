@@ -1,0 +1,12 @@
+# Consumed by Pods/HyperSDK/Fuse.rb during pod install to fetch the HyperSDK
+# assets bundle into HyperSDK.xcframework. Without it the pod's
+# "Validate Mandatory Files" build phase fails the build with
+# "Required files are missing in HyperSDK.xcframework".
+#
+# This is the HyperSDK asset client, which is separate from the BBPS clientId.
+# "stock" has no iOS release config published (the asset server returns 500),
+# so the HyperUPI test client is used here (merchant_config.json ->
+# hyperupi.clientId). Replace with the merchant's own.
+clientId=popclub
+env=production
+scope=release

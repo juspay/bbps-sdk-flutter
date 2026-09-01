@@ -1,46 +1,79 @@
 PODS:
-  - Airborne (0.30.1)
-  - BBPSSDK (0.0.5):
-    - HyperSDK (= 2.2.7)
+  - Airborne (0.37.0)
+  - bbps_sdk_flutter (0.0.3):
+    - BBPSSDK (>= 0.0.5)
+    - Flutter
+  - BBPSSDK (0.0.7):
+    - HyperSDK (= 2.2.8)
+  - CommonLibrary (1.8.0)
   - Flutter (1.0.0)
-  - HyperCore (1.0.0)
-  - HyperSDK (2.2.7):
-    - Airborne (= 0.30.1)
-    - HyperCore (= 1.0.0)
+  - HyperCore (1.0.4)
+  - HyperQR (2.2.8)
+  - HyperSDK (2.2.8):
+    - Airborne (= 0.37.0)
+    - HyperCore (= 1.0.4)
     - JuspaySafeBrowser (= 0.1.94)
+  - hypersdkflutter (4.0.57):
+    - Flutter
+    - HyperSDK (= 2.2.8)
+  - HyperUPI (2.2.8)
+  - integration_test (0.0.1):
+    - Flutter
   - JuspaySafeBrowser (0.1.94)
 
 DEPENDENCIES:
-  - BBPSSDK (from `https://github.com/juspay/bbps-ios.git`, tag `v0.0.5`)
+  - bbps_sdk_flutter (from `.symlinks/plugins/bbps_sdk_flutter/ios`)
+  - BBPSSDK (from `https://github.com/juspay/bbps-ios.git`, tag `v0.0.8`)
+  - CommonLibrary (from `CommonLibrary.podspec`)
   - Flutter (from `Flutter`)
+  - HyperQR (= 2.2.8)
+  - hypersdkflutter (from `.symlinks/plugins/hypersdkflutter/ios`)
+  - HyperUPI (= 2.2.8)
+  - integration_test (from `.symlinks/plugins/integration_test/ios`)
 
 SPEC REPOS:
   trunk:
     - Airborne
     - HyperCore
+    - HyperQR
     - HyperSDK
+    - HyperUPI
     - JuspaySafeBrowser
 
 EXTERNAL SOURCES:
+  bbps_sdk_flutter:
+    :path: ".symlinks/plugins/bbps_sdk_flutter/ios"
   BBPSSDK:
     :git: https://github.com/juspay/bbps-ios.git
-    :tag: v0.0.5
+    :tag: v0.0.8
+  CommonLibrary:
+    :podspec: CommonLibrary.podspec
   Flutter:
     :path: Flutter
+  hypersdkflutter:
+    :path: ".symlinks/plugins/hypersdkflutter/ios"
+  integration_test:
+    :path: ".symlinks/plugins/integration_test/ios"
 
 CHECKOUT OPTIONS:
   BBPSSDK:
     :git: https://github.com/juspay/bbps-ios.git
-    :tag: v0.0.5
+    :tag: v0.0.8
 
 SPEC CHECKSUMS:
-  Airborne: 75d28fa4564da09a6873958c5e9bb5cc087bd7a8
-  BBPSSDK: 45ae18828e23df56785682546ee74b85071df324
+  Airborne: 118490096542972c3f208cc2d711a44b2b637bad
+  bbps_sdk_flutter: e3527bea208e928b78d5788ae5669a13ce14f61b
+  BBPSSDK: 1e139faa54e065a9e35b16defd6642f1a35a2fe6
+  CommonLibrary: f319760a2e573906def6db86ca06c012e6bf58d5
   Flutter: cabc95a1d2626b1b06e7179b784ebcf0c0cde467
-  HyperCore: ecb6079d68718fbb45307d48d0282f82d9799c59
-  HyperSDK: 3f349da298264f44294201be8ab21e94cb424e7e
+  HyperCore: d64ed46fe8a845c9a539a7edd33049702e7b61a9
+  HyperQR: 69e8ffd3b0f1a75b744648a061a09222461fd097
+  HyperSDK: ffcdc4ec57bb6562f507e83755f565e2ee59b146
+  hypersdkflutter: cc460eebaf5975a20658c7d80cd5cfa06301b00e
+  HyperUPI: c919a0aa814efff33c23f41fd2c98efe71f18174
+  integration_test: 4a889634ef21a45d28d50d622cf412dc6d9f586e
   JuspaySafeBrowser: 8141eb92fe4d77da997907a0c5eadc0616bce2fa
 
-PODFILE CHECKSUM: a9e5e279dda9bb175fd524ac03a5a5fd99ddf7eb
+PODFILE CHECKSUM: 91d3c71535c7f637dafb6bf6d43d519519f74a01
 
-COCOAPODS: 1.16.2
+COCOAPODS: 1.17.0

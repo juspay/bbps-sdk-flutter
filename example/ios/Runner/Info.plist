@@ -73,6 +73,11 @@
 		<string>salaryse</string>
 		<string>devtools</string>
 		<string>cugext</string>
+		<string>payzapp</string>
+		<string>imobileapp</string>
+		<string>bajajpayupi</string>
+		<string>curieapp</string>
+		<string>aufmobile</string>
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>

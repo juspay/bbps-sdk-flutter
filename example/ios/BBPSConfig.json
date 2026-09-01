@@ -1,5 +1,5 @@
 {
-  "clientConfigs": {
-    "fibe": {}
-  }
+  "clientId": "stock",
+  "env": "production",
+  "scope": "release"
 }
