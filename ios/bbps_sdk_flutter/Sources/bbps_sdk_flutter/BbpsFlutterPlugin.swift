@@ -91,15 +91,13 @@ public class BbpsFlutterPlugin: NSObject, FlutterPlugin {
             guard let responseDict = response as? [String: Any] else { return }
             
             if let eventName = responseDict["event"] as? String {
-                let innerPayload = responseDict["payload"]
-                self.eventSink?(["event": eventName, "payload": innerPayload ?? [:]])
-                
+                self.eventSink?(responseDict)
                 if eventName == "initiate_result" {
                     self.currentResult?(responseDict)
                     self.currentResult = nil
                 }
             } else {
-                self.eventSink?(["event": "INITIATE_RESULT", "payload": responseDict])
+                self.eventSink?(responseDict)
                 self.currentResult?(responseDict)
                 self.currentResult = nil
             }

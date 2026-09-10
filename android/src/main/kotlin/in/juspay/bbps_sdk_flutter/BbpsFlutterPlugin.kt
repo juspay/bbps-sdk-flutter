@@ -13,7 +13,19 @@ import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.MethodChannel.Result
 import `in`.org.npci.bbps.BBPSAgentInterface
 import `in`.org.npci.bbps.BBPSService
+import org.json.JSONArray
 import org.json.JSONObject
+
+private fun Any?.toStandardTypes(): Any? = when (this) {
+    null, JSONObject.NULL -> null
+    is JSONObject -> {
+        val map = HashMap<String, Any?>()
+        for (key in keys()) map[key] = opt(key).toStandardTypes()
+        map
+    }
+    is JSONArray -> (0 until length()).map { get(it).toStandardTypes() }
+    else -> this
+}
 
 /** BbpsFlutterPlugin */
 class BbpsFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware, EventChannel.StreamHandler {
@@ -33,48 +45,34 @@ class BbpsFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware, Event
     inner class BBPSAgent(private val context: FragmentActivity) : BBPSAgentInterface {
         
         override fun do_payment(billDetails: JSONObject?) {
-            Log.d(TAG, "do_payment: $billDetails")
-            eventSink?.success(mapOf(
-                "event" to "DO_PAYMENT",
-                "payload" to billDetails?.toString()
-            ))
+            Log.d(TAG, "do_payment (from BBPSService): $billDetails")
+            eventSink?.success(billDetails.toStandardTypes())
         }
 
         fun set_txn_status(txnStatus: JSONObject?) {
-            Log.d(TAG, "set_txn_status: $txnStatus")
-            eventSink?.success(mapOf(
-                "event" to "SET_TXN_STATUS",
-                "payload" to txnStatus?.toString()
-            ))
+            Log.d(TAG, "set_txn_status (from BBPSService): $txnStatus")
+            eventSink?.success(txnStatus.toStandardTypes())
             val intent = Intent("CLOSE_PAYMENT_ACTIVITY")
             context.sendBroadcast(intent)
         }
 
         override fun initiate_result(payload: JSONObject?) {
-            Log.d(TAG, "initiate_result: $payload")
-            eventSink?.success(mapOf(
-                "event" to "INITIATE_RESULT",
-                "payload" to payload?.toString()
-            ))
-            currentResult?.success(payload?.toString())
+            Log.d(TAG, "initiate_result (from BBPSService): $payload")
+            val flutterEvent = payload.toStandardTypes()
+            eventSink?.success(flutterEvent)
+            currentResult?.success(flutterEvent)
             currentResult = null
         }
 
         override fun process_result(payload: JSONObject?) {
-            Log.d(TAG, "process_result: $payload")
+            Log.d(TAG, "process_result (from BBPSService): $payload")
             try {
-                val event = payload?.optString("event", "")
-                val processPayload = payload?.optJSONObject("payload")
-                
-                eventSink?.success(mapOf(
-                    "event" to event,
-                    "payload" to processPayload?.toString()
-                ))
-                
-                when (event) {
-                    "DO_PAYMENT" -> do_payment(processPayload)
+                val flutterEvent = payload.toStandardTypes()
+                eventSink?.success(flutterEvent)
+                val inner = payload?.optJSONObject("payload")
+                when (inner?.optString("event", "")) {
                     "SET_BBPS_TXN_STATUS" -> {
-                        set_txn_status(processPayload)
+                        set_txn_status(inner?.optJSONObject("payload"))
                         val intent = Intent(context, context::class.java)
                         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
                         context.startActivity(intent)
@@ -84,7 +82,7 @@ class BbpsFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware, Event
                         val intent = Intent(context, context::class.java)
                         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
                         context.startActivity(intent)
-                        currentResult?.success(payload.toString())
+                        currentResult?.success(flutterEvent)
                         currentResult = null
                     }
                 }
@@ -95,11 +93,8 @@ class BbpsFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware, Event
         }
 
         override fun refresh_auth(payload: JSONObject?) {
-            Log.d(TAG, "refresh_auth: $payload")
-            eventSink?.success(mapOf(
-                "event" to "REFRESH_AUTH",
-                "payload" to payload?.toString()
-            ))
+            Log.d(TAG, "refresh_auth (from BBPSService): $payload")
+            eventSink?.success(payload.toStandardTypes())
         }
     }
 
