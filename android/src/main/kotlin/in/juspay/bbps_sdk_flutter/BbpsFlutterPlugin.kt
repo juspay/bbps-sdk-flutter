@@ -44,45 +44,32 @@ class BbpsFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware, Event
 
     inner class BBPSAgent(private val context: FragmentActivity) : BBPSAgentInterface {
         
-        override fun do_payment(billDetails: JSONObject?) {
-            Log.d(TAG, "do_payment (from BBPSService): $billDetails")
-            eventSink?.success(billDetails.toStandardTypes())
-        }
-
-        fun set_txn_status(txnStatus: JSONObject?) {
-            Log.d(TAG, "set_txn_status (from BBPSService): $txnStatus")
-            eventSink?.success(txnStatus.toStandardTypes())
-            val intent = Intent("CLOSE_PAYMENT_ACTIVITY")
-            context.sendBroadcast(intent)
+        override fun do_payment(payload: JSONObject?) {
+            Log.d(TAG, "do_payment (from BBPSService): $payload")
+            eventSink?.success(payload.toStandardTypes())
         }
 
         override fun initiate_result(payload: JSONObject?) {
             Log.d(TAG, "initiate_result (from BBPSService): $payload")
-            val flutterEvent = payload.toStandardTypes()
-            eventSink?.success(flutterEvent)
-            currentResult?.success(flutterEvent)
+            val initiateResult = payload.toStandardTypes()
+            eventSink?.success(initiateResult)
+            currentResult?.success(initiateResult)
             currentResult = null
         }
 
         override fun process_result(payload: JSONObject?) {
             Log.d(TAG, "process_result (from BBPSService): $payload")
             try {
-                val flutterEvent = payload.toStandardTypes()
-                eventSink?.success(flutterEvent)
+                val processResult = payload.toStandardTypes()
+                eventSink?.success(processResult)
                 val inner = payload?.optJSONObject("payload")
                 when (inner?.optString("event", "")) {
-                    "SET_BBPS_TXN_STATUS" -> {
-                        set_txn_status(inner?.optJSONObject("payload"))
-                        val intent = Intent(context, context::class.java)
-                        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
-                        context.startActivity(intent)
-                    }
                     "USER_EXIT" -> Log.i(TAG, "User exited BBPS flow")
                     "PROCESS_RESULT" -> {
                         val intent = Intent(context, context::class.java)
                         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
                         context.startActivity(intent)
-                        currentResult?.success(flutterEvent)
+                        currentResult?.success(processResult)
                         currentResult = null
                     }
                 }
