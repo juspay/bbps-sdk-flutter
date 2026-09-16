@@ -4,7 +4,7 @@
 #
 Pod::Spec.new do |s|
   s.name             = 'bbps_sdk_flutter'
-  s.version          = '0.0.3'
+  s.version          = '0.0.4'
   s.summary          = 'Flutter plugin for Juspay BBPS SDK.'
   s.description      = <<-DESC
 Flutter plugin for Juspay BBPS SDK.

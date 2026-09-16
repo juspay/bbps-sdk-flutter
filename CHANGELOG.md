@@ -1,3 +1,13 @@
+## 0.0.4
+
+### Breaking Changes
+- Event stream and method-call responses now emit decoded maps directly instead of JSON strings or `{event, payload}` envelopes
+- `BbpsEvent` no longer wraps responses, new fields `requestId`, `service`, `errorCode`, and `errorMessage` added, and `error` is now a `String?`
+
+### Native Changes
+- **Android**: Added `toStandardTypes()` to convert `JSONObject`/`JSONArray` payloads into standard Dart types (maps/lists), removed `set_txn_status` helper and simplified `process_result` to read the `event` from the inner payload
+- **iOS**: Event sink now forwards the native response dictionary as-is instead of re-wrapping it in an `{event, payload}` envelope
+
 ## 0.0.3
 
 - Lowered minimum Dart SDK requirement from `^3.11.5` to `^3.9.0`
