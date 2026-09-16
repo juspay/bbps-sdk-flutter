@@ -10,8 +10,20 @@ class BbpsEvent {
   final String event;
   final Map<String, dynamic>? payload;
   final String? error;
+  final String? requestId;
+  final String? service;
+  final String? errorCode;
+  final String? errorMessage;
 
-  BbpsEvent({required this.event, this.payload, this.error});
+  BbpsEvent({
+    required this.event,
+    this.payload,
+    this.error,
+    this.requestId,
+    this.service,
+    this.errorCode,
+    this.errorMessage,
+  });
 
   factory BbpsEvent.fromMap(Map<dynamic, dynamic> map) {
     Map<String, dynamic>? payload;
@@ -25,13 +37,17 @@ class BbpsEvent {
     return BbpsEvent(
       event: map['event'] ?? '',
       payload: payload,
-      error: map['error'],
+      error: map['error']?.toString(),
+      requestId: map['requestId']?.toString(),
+      service: map['service']?.toString(),
+      errorCode: map['errorCode']?.toString(),
+      errorMessage: map['errorMessage']?.toString(),
     );
   }
 
   @override
   String toString() =>
-      'BbpsEvent(event: $event, payload: $payload, error: $error)';
+      'BbpsEvent(event: $event, payload: $payload, error: $error, requestId: $requestId, service: $service, errorCode: $errorCode, errorMessage: $errorMessage)';
 }
 
 /// Platform interface for BBPS Flutter Plugin
