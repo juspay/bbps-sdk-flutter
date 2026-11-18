@@ -11,11 +11,12 @@ public class BbpsFlutterPlugin: NSObject, FlutterPlugin {
     private var rootViewController: UIViewController? {
         guard let windowScene = UIApplication.shared.connectedScenes
             .compactMap({ $0 as? UIWindowScene })
-            .first(where: { $0.activationState == .foregroundActive }) else {
+            .first(where: { $0.activationState == .foregroundActive || $0.activationState == .foregroundInactive})
+                ?? UIApplication.shared.connectedScenes.compactMap({ $0 as? UIWindowScene }).first else {
             return nil
         }
-        
-        guard let window = windowScene.windows.first(where: { $0.isKeyWindow }),
+
+        guard let window = windowScene.windows.first(where: { $0.isKeyWindow }) ?? windowScene.windows.first,
               var rootVC = window.rootViewController else {
             return nil
         }
